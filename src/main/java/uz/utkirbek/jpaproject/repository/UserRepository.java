@@ -1,6 +1,6 @@
-package com.example.jpaproject.repository;
+package uz.utkirbek.jpaproject.repository;
 
-import com.example.jpaproject.model.User;
+import uz.utkirbek.jpaproject.model.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

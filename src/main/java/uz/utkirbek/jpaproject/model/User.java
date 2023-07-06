@@ -1,4 +1,4 @@
-package com.example.jpaproject.model;
+package uz.utkirbek.jpaproject.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

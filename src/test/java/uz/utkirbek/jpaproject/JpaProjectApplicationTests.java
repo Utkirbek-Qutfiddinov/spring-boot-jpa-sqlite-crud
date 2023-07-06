@@ -1,4 +1,4 @@
-package com.example.jpaproject;
+package uz.utkirbek.jpaproject;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

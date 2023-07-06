@@ -1,7 +1,7 @@
-package com.example.jpaproject.controller;
+package uz.utkirbek.jpaproject.controller;
 
-import com.example.jpaproject.model.User;
-import com.example.jpaproject.repository.UserRepository;
+import uz.utkirbek.jpaproject.model.User;
+import uz.utkirbek.jpaproject.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
