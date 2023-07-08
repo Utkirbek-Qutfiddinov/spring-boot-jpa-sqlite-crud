@@ -37,10 +37,15 @@ public class UserController {
         return "Successfully added!";
     }
 
-    @DeleteMapping
+    @DeleteMapping("/{id}")
     public String delete(@PathVariable Integer id){
-        userRepository.deleteById(id);
-        return "Succesfully deleted!";
+        Optional<User> optionalUser=userRepository.findById(id);
+        if (optionalUser.isPresent()){
+            userRepository.deleteById(id);
+            return "Succesfully deleted!";
+        }else {
+            return "User not found!";
+        }
     }
 
     @PutMapping
