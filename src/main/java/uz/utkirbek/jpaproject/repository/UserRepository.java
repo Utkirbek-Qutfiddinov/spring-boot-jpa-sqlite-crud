@@ -6,7 +6,7 @@ import org.springframework.stereotype.Repository;
 
 /**
  * Author: utkirbek.
- * Time: 21:59:32
+ * Time: 21:59:31
  * Date: July 04, 2023, Tuesday
  */
 @Repository
