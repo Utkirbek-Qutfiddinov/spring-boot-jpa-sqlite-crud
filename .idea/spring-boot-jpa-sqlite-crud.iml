@@ -16,6 +16,7 @@
         <setting name="provider-name" value="Hibernate" />
         <datasource-mapping>
           <factory-entry name="entityManagerFactory" />
+          <factory-entry name="spring-boot-jpa-sqlite-crud" value="c8eb4d9b-81bb-46f0-8972-187aac19bf09" />
         </datasource-mapping>
         <naming-strategy-map />
       </configuration>
