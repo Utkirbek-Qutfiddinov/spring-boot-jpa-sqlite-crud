@@ -14,35 +14,36 @@ import java.util.Optional;
  * Date: July 04, 2023, Tuesday
  */
 @RestController
+@RequestMapping("/users")
 public class UserController {
 
     @Autowired
     UserRepository userRepository;
 
-    @RequestMapping(value = "/users", method = RequestMethod.GET)
+    @GetMapping
     public List<User> findAll(){
         return userRepository.findAll();
     }
 
-    @RequestMapping(value = "/users/{id}", method = RequestMethod.GET)
+    @GetMapping("/{id}")
     public User getOne(@PathVariable Integer id){
         Optional<User> optionalUser = userRepository.findById(id);
         return optionalUser.orElseGet(User::new);
     }
 
-    @RequestMapping(value = "/users", method = RequestMethod.POST)
+    @PostMapping
     public String save(@RequestBody User user){
         userRepository.save(user);
         return "Successfully added!";
     }
 
-    @RequestMapping(value = "/users/{id}", method = RequestMethod.DELETE)
+    @DeleteMapping
     public String delete(@PathVariable Integer id){
         userRepository.deleteById(id);
         return "Succesfully deleted!";
     }
 
-    @RequestMapping(value = "/users", method = RequestMethod.PUT)
+    @PutMapping
     public String update(@RequestBody User user){
         Optional<User> optionalUser=userRepository.findById(user.getId());
         if (optionalUser.isPresent()){
