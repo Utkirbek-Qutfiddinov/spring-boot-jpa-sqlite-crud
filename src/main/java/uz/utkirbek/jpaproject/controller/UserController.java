@@ -13,7 +13,8 @@ import java.util.List;
  * Time: 21:41:58
  * Date: July 04, 2023, Tuesday
  */
-@RestController("/api/users")
+@RestController
+@RequestMapping("/api/users")
 public class UserController {
 
     @Autowired
