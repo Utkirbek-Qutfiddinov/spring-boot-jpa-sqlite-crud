@@ -1,4 +1,4 @@
-package uz.utkirbek.jpaproject.model;
+package uz.utkirbek.jpaproject.entity;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -21,6 +21,12 @@ public class User {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
 
-    @Column
-    private String name;
+    @Column(nullable = false)
+    private String fullName;
+
+    @Column(nullable = false, unique = true)
+    private String phoneNumber;
+
+    @Column(nullable = false)
+    private String address;
 }

@@ -1,56 +1,48 @@
 package uz.utkirbek.jpaproject.controller;
 
-import uz.utkirbek.jpaproject.model.User;
-import uz.utkirbek.jpaproject.repository.UserRepository;
+import uz.utkirbek.jpaproject.dto.UserDto;
+import uz.utkirbek.jpaproject.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import uz.utkirbek.jpaproject.service.UserService;
 
 import java.util.List;
-import java.util.Optional;
 
 /**
  * Author: utkirbek.
  * Time: 21:41:58
  * Date: July 04, 2023, Tuesday
  */
-@RestController
+@RestController("/api/users")
 public class UserController {
 
     @Autowired
-    UserRepository userRepository;
+    UserService userService;
 
-    @RequestMapping(value = "/users", method = RequestMethod.GET)
+    @GetMapping
     public List<User> findAll(){
-        return userRepository.findAll();
+        return userService.getAll();
     }
 
-    @RequestMapping(value = "/users/{id}", method = RequestMethod.GET)
+    @GetMapping("/{id}")
     public User getOne(@PathVariable Integer id){
-        Optional<User> optionalUser = userRepository.findById(id);
-        return optionalUser.orElseGet(User::new);
+        return userService.getOne(id);
     }
 
-    @RequestMapping(value = "/users", method = RequestMethod.POST)
-    public String save(@RequestBody User user){
-        userRepository.save(user);
-        return "Successfully added!";
+    @PostMapping
+    public String save(@RequestBody UserDto user){
+        return userService.save(user);
     }
 
-    @RequestMapping(value = "/users/{id}", method = RequestMethod.DELETE)
+    @DeleteMapping("/{id}")
     public String delete(@PathVariable Integer id){
-        userRepository.deleteById(id);
-        return "Succesfully deleted!";
+        return userService.delete(id);
+
     }
 
-    @RequestMapping(value = "/users", method = RequestMethod.PUT)
-    public String update(@RequestBody User user){
-        Optional<User> optionalUser=userRepository.findById(user.getId());
-        if (optionalUser.isPresent()){
-            userRepository.save(user);
-            return "Updated succesfully!";
-        }else {
-            return "User not found!";
-        }
+    @PutMapping
+    public String update(@RequestBody UserDto user){
+        return userService.update(user);
     }
 
 }
