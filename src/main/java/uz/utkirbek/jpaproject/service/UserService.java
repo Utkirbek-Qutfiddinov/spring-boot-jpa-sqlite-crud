@@ -1,7 +1,9 @@
 package uz.utkirbek.jpaproject.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import uz.utkirbek.jpaproject.dto.ApiResponse;
 import uz.utkirbek.jpaproject.dto.UserDto;
 import uz.utkirbek.jpaproject.entity.User;
 import uz.utkirbek.jpaproject.repository.UserRepository;
@@ -30,45 +32,47 @@ public class UserService {
         return optionalUser.orElse(null);
     }
 
-    public String save(UserDto userDto){
+    public ApiResponse save(UserDto userDto){
+        if (userRepository.existsByPhoneNumber(userDto.getPhoneNumber()))
+            return new ApiResponse("Bunday User mavjud!",false, HttpStatus.CONFLICT);
+
         User user=new User();
         user.setAddress(userDto.getAddress());
         user.setFullName(userDto.getFullName());
         user.setPhoneNumber(userDto.getPhoneNumber());
         userRepository.save(user);
-        return "User saqlandi";
+        return new ApiResponse("User saqlandi",true,HttpStatus.CREATED);
     }
 
-    public String delete(Integer id){
-        if(!userRepository.existsById(id)){
-            return "User topilmadi";
-        }else {
-            userRepository.deleteById(id);
-            return "User o'chirildi!";
-        }
+    public ApiResponse delete(Integer id){
+        if(!userRepository.existsById(id))
+            return new ApiResponse("User topilmadi",false, HttpStatus.BAD_REQUEST);
+
+        userRepository.deleteById(id);
+        return new ApiResponse("User o'chirildi!",true,HttpStatus.OK);
+
     }
 
-    public String update(UserDto userDto){
+    public ApiResponse update(UserDto userDto){
         if (userDto.getId()==null)
-            return "User topilmadi!";
+            return new ApiResponse("ID null bo'lmasligi kerak",false,HttpStatus.NOT_ACCEPTABLE);
 
+        if (userRepository.existsByPhoneNumberAndIdNot(userDto.getPhoneNumber(), userDto.getId()))
+            return new ApiResponse("Bunday foydalanuvchi mavjud!",false, HttpStatus.CONFLICT);
 
         Optional<User> optionalUser=userRepository.findById(userDto.getId());
         if (!optionalUser.isPresent())
-            return "User topilmadi!";
+            return new ApiResponse("User topilmadi",false, HttpStatus.BAD_REQUEST);
 
-        if (userRepository.existsByPhoneNumberAndIdNot(userDto.getPhoneNumber(), userDto.getId()))
-                return "Bunday foydalanuvchi mavjud!";
 
-        User user=new User();
+        User user= optionalUser.get();
         user.setPhoneNumber(userDto.getPhoneNumber());
         user.setFullName(userDto.getFullName());
-        user.setAddress(user.getAddress());
-        user.setId(userDto.getId());
+        user.setAddress(userDto.getAddress());
 
         userRepository.save(user);
 
-        return "User tahrirlandi!";
+        return new ApiResponse("User tahrirlandi!",true, HttpStatus.OK);
 
     }
 }

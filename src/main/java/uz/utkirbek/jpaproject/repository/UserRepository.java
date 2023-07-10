@@ -13,4 +13,6 @@ import org.springframework.stereotype.Repository;
 public interface UserRepository extends JpaRepository<User, Integer> {
 
     boolean existsByPhoneNumberAndIdNot(String phoneNumber, Integer id);
+
+    boolean existsByPhoneNumber(String phoneNumber);
 }

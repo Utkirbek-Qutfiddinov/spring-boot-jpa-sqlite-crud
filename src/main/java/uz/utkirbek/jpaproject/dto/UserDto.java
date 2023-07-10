@@ -19,12 +19,12 @@ public class UserDto {
 
     private Integer id;
 
-    @NotNull
+    @NotNull(message = "fullName can not be null")
     private String fullName;
 
-    @NotNull
+    @NotNull(message = "phoneNumber can not be null")
     private String phoneNumber;
 
-    @NotNull
+    @NotNull(message = "address can not be null")
     private String address;
 }
